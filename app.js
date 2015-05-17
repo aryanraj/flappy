@@ -1,4 +1,5 @@
-game_functions = [];
+var game_functions = [],
+	interval;
 
 function game_load(func) {
 	game_functions.push(func);
@@ -28,12 +29,13 @@ step = function(timestamp){
 		var time = (new Date()).getTime()-start_time;
 		Bird.update(time);
 		Block.update(time);
-		if(Block.check_collision(Bird.x, Bird.y))
+		if(Block.check_collision(Bird.x, Bird.y)) {
+			clearInterval(interval);
 			location.reload();
+		}
 	}
 	Bird.render(ctx);
 	Block.render(ctx);
-	requestAnimationFrame(step);
 }
 
 game_load(function(){
@@ -47,7 +49,7 @@ game_load(function(){
 	addEventListener("keydown", send_interupt);
 	addEventListener("touchstart", send_interupt);
 	
-	requestAnimationFrame(step);
+	interval = setInterval(step,20);
 });
 
 document.onreadystatechange = function() {
