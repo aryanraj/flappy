@@ -1,8 +1,9 @@
 Bird = {
 	x : canvas.width*0.2,
 	y : canvas.height/2,
-	v : 0,
-	a : 9.81,
+	v : -canvas.height/2,
+	a : canvas.height*2,
+	v_max : canvas.height,
 	prev_time : 0,
 	start : false,
 	last_interupt_time : 0
@@ -10,10 +11,10 @@ Bird = {
 
 Bird.update = function(time)
 {
-	Bird.y += Bird.v*(time-Bird.prev_time);
-	Bird.v += Bird.a*(time-Bird.prev_time);
+	Bird.y += Bird.v*(time-Bird.prev_time)/1000;
+	Bird.v += Bird.a*(time-Bird.prev_time)/1000;
 	Bird.prev_time = time;
-	console.log("updateing");
+	// console.log("updateing"+Bird.y);
 }
 
 Bird.render = function(ctx)
@@ -34,10 +35,10 @@ Bird.render = function(ctx)
 
 Bird.interupt = function(time)
 {
-	if(time - Bird.last_interupt_time > 500)
+	if(time - Bird.last_interupt_time > 200)
 	{
 		Bird.last_interupt_time = time;
-		Bird.v = -10;
+		Bird.v = -Bird.v_max;
 	}
 }
 
