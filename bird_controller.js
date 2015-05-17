@@ -1,9 +1,4 @@
 Bird = {
-	x : canvas.width*0.2,
-	y : canvas.height/2,
-	v : -canvas.height/2,
-	a : canvas.height*2,
-	v_max : canvas.height,
 	prev_time : 0,
 	start : false,
 	last_interupt_time : 0
@@ -49,3 +44,12 @@ Bird.image.onload = function()
 	Bird.start = true;
 }
 Bird.image.src = "assets/flappy_atlas.png";
+
+game_load(function(){
+
+	Bird.x = canvas.width*0.2;
+	Bird.y = canvas.height/2;
+	Bird.v = -canvas.height/2;
+	Bird.a = canvas.height*2;
+	Bird.v_max = canvas.height;
+});

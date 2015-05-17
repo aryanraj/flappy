@@ -57,11 +57,10 @@ block.prototype.collision = function(x,y) {
 		return false;
 };
 
+
 Block = {
 	start : -2,
-	block : [],
-	block_distance : canvas.height/3,
-	block_x : canvas.width
+	block : []
 }
 
 Block.add = function(i) {
@@ -90,9 +89,6 @@ Block.check_collision = function(x,y) {
 			return true;
 }
 
-for(var i=0; i<canvas.width/Block.block_distance; i++)
-	Block.add();
-
 ////////////////////////////////Loading image///////////////////////
 Block.image_upper = new Image();
 Block.image_lower = new Image();
@@ -106,3 +102,10 @@ Block.image_lower.onload = function()
 }
 Block.image_upper.src = "assets/upper.png";
 Block.image_lower.src = "assets/lower.png";
+
+game_load(function(){
+	Block.block_distance = canvas.height/3
+	Block.block_x = canvas.width;
+	for(var i=0; i<canvas.width/Block.block_distance; i++)
+		Block.add();
+});

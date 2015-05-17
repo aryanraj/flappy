@@ -1,16 +1,16 @@
-canvas = document.getElementById('canvas');
-ctx = canvas.getContext("2d");
-SCALE = canvas.height/256;
-start_time = false;
+game_functions = [];
 
-addEventListener("keydown", function(e) {
+function game_load(func) {
+	game_functions.push(func);
+};
+
+function send_interupt(e) {
 	if(start_time == false)
 	{
 		start_time = (new Date()).getTime();
 	}
 	Bird.interupt((new Date()).getTime()-start_time);
-});
-
+}
 
 step = function(timestamp){
 	ctx.clearRect (0,0,canvas.width,canvas.height);
@@ -35,4 +35,25 @@ step = function(timestamp){
 	Block.render(ctx);
 	requestAnimationFrame(step);
 }
-requestAnimationFrame(step);
+
+game_load(function(){
+	canvas = document.getElementById('canvas');
+	ctx = canvas.getContext("2d");
+	canvas.height = document.body.clientHeight;
+	canvas.width = document.body.clientWidth;
+	SCALE = canvas.height/256;
+	start_time = false;
+
+	addEventListener("keydown", send_interupt);
+	addEventListener("touchstart", send_interupt);
+	
+	requestAnimationFrame(step);
+});
+
+document.onreadystatechange = function() {
+	if(document.readyState == "complete")
+	{
+		for(i in game_functions)
+			game_functions[i]();
+	}
+}
